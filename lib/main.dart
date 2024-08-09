@@ -23,8 +23,16 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
       ],
-      initialRoute: "/",
-      home: const DefectReportListPage(),
+      home: getSessionPage(),
     );
+  }
+}
+  var isSession = false;
+
+Widget getSessionPage() {
+  if (!isSession) {
+    return const LoginPage();
+  } else {
+    return const DefectReportListPage();
   }
 }

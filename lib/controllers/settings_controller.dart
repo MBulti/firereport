@@ -1,3 +1,4 @@
+import 'package:firereport/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,8 @@ class SettingsController extends GetxController {
     Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
   }
 
-  void logout() {
-    print("Logout");
+    void logout() {
+    //Supabase.instance.client.auth.signOut();
+    Get.offAll(const LoginPage());
   }
 }
