@@ -3,8 +3,13 @@ import 'package:firereport/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/route_manager.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+Future<void> main() async {
+  await Supabase.initialize(
+    url: "https://gtjwpkqnehchegvxesva.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0andwa3FuZWhjaGVndnhlc3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1Mzg0OTYsImV4cCI6MjAzOTExNDQ5Nn0.7ZAHS7OOwcJy3ooTwhMVKhgbih6bLYvSvQ44A8-vC3M"
+  );
   runApp(const MyApp());
 }
 
@@ -27,10 +32,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-  var isSession = false;
 
 Widget getSessionPage() {
-  if (!isSession) {
+  if (Supabase.instance.client.auth.currentSession == null) {
     return const LoginPage();
   } else {
     return const DefectReportListPage();

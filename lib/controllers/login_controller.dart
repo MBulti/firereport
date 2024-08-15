@@ -1,6 +1,7 @@
 import 'package:firereport/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
@@ -15,11 +16,24 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  void login() async {
-    Get.offAll(const DefectReportListPage());
+  Future<void> login() async {
+    try {
+      await Supabase.instance.client.auth.signInWithPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Get.offAll(const DefectReportListPage());
+    } on AuthException catch (e) {
+      Get.rawSnackbar(message: e.message, snackPosition: SnackPosition.BOTTOM);
+    }
   }
 
-    void guestLogin() async {
-    Get.offAll(const DefectReportListPage());
+  Future<void> guestLogin() async {
+    try {
+      await Supabase.instance.client.auth.signInAnonymously();
+      Get.offAll(const DefectReportListPage());
+    } on AuthException catch (e) {
+      Get.rawSnackbar(message: e.message, snackPosition: SnackPosition.BOTTOM);
+    }
   }
 }
